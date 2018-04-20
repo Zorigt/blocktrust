@@ -1,7 +1,7 @@
-# blocktrust
-In Block-Data We Trust
+# Insight Data Engineering 18B
+**Blocktrust**: In Block-Data We Trust 👁️
 ## Project Description
-I want to bring transparency to bitcoin transactions and blockchains. Blockchains are immutable public ledger that can be audited, but hardly anyone keeps track of how money is moved  between wallets. Average daily bitcoin transaction volume is roughly **$7,449,010,000** USD as in *BILLIONS* (1). 
+Bring transparency to bitcoin transactions and blockchains. Blockchains are immutable public ledger that can be audited, but hardly anyone keeps track of how money is moved  between wallets. Average daily bitcoin transaction volume is roughly **$7,449,010,000** USD as in *BILLIONS* (1). 
 ## Purpose
 Do you want to find out how many bitcoins WikiLeaks received as donation and how they spend it? According to Wikileaks wallet address, they spent it all. As of April 20, 2018 - Wikileaks has mere 0.00001 BTC left in its wallet but they have received about ₿4,042.5 as donations (2). How much is ₿4,042.5 in US Dollars aggregated over time mapped to the exchange rate? How can we trust Wikileaks is ethically spending their funds and for what purposes? Can we track their spending pattern on the blockchain to find out who received all those bitcoins from Wikileaks? 
 
