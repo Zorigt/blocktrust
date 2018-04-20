@@ -10,7 +10,7 @@ Wikileaks wallet address 1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v
 - Total Received	4,042.49832271 BTC	
 - Final Balance	0.00001 BTC
 
-So many questions to unearth, but no easy ways to find answers. Bitcoin wallet addresses are public, but it is not human readable or trackable. Blockchain has little impact on society if people can't extrabolate the insights. 
+So many questions to unearth, but no easy ways to find answers. Bitcoin wallet addresses are public, but it is not human readable or trackable. Blockchain has little impact on society if average people can't extrabolate the insights. 
 ## Solution
 Blockchain an·o·nym·i·ty is a modern problem that requires modern technology to unviel. True democracy requires informed citizens, otherwise they will become a herd of sheep. With my data pipeline using bitcoin blockhain data sets, let's follow the money!
 ## Data sets
