@@ -1,5 +1,5 @@
 # blocktrust
-In Data We Trust
+In Block-Data We Trust
 ## Project Description
 I want to bring transparency to bitcoin transactions and blockchains. Blockchains are immutable public ledger that can be audited, but hardly anyone keeps track of how money is moved  between wallets. Average daily bitcoin transaction volume is roughly **$7,449,010,000** USD as in *BILLIONS* (1). 
 ## Purpose
@@ -10,7 +10,7 @@ Wikileaks wallet address 1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v
 - Total Received	4,042.49832271 BTC	
 - Final Balance	0.00001 BTC
 
-So many questions to unearth, but no easy ways to find answers. Bitcoin wallet addresses are public, but it is not human readable or trackable. Blockchain has little impact on society if average people can't extrabolate the insights. 
+So many questions to unearth, but no easy ways to find answers. Bitcoin wallet addresses are public, but it is not human readable or trackable. If average person can't extrabolate information from blockchain, then it servers little purpose on society. 
 ## Solution
 Blockchain an·o·nym·i·ty is a modern problem that requires modern technology to unviel. True democracy requires informed citizens, otherwise they will become a herd of sheep. With my data pipeline using bitcoin blockhain data sets, let's follow the money!
 ## Data sets
