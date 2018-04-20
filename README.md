@@ -26,6 +26,6 @@ Combined ~ 1 TB of data to process
 ## Data Pipeline 
 ![alt text](/data-pipeline.png)
 
-References: 
+References <br />
 (1) April 20, 2018; https://coinmarketcap.com/currencies/bitcoin/  <br />
 (2) April 20, 2018; https://blockchain.info/address/1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v
