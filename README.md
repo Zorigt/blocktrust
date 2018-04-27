@@ -36,7 +36,7 @@ Overall completeness of the pipeline
 S3, Kafka, Spark stream, Cassandra, Flask
 
 ## What are the (quantitative) specifications/constraints for this project?
-Spec: Query results within 200 millis in Flask
+Spec: Query results within 200 millis in Flask <\br>
 Constraints: cluster size and count, nodes 3-5, metrics that can queried from the DB
 
 
