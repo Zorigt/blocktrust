@@ -28,16 +28,21 @@ Combined ~ 1 TB of data to process
 
 
 ## What are the primary engineering challenges? -> Why would a Data Engineering Hiring Manager care about this project
-high throughput processing from Kafka broker to Spark stream
-High availabilit database choice and queries for demo
-Overall completeness of the pipeline
+- High throughput processing from Kafka broker to Spark stream
+- High availabilit database choice and queries for demo
+- Overall completeness of the pipeline
 
 ## Proposed architecture
 S3, Kafka, Spark stream, Cassandra, Flask
 
 ## What are the (quantitative) specifications/constraints for this project?
-Spec: Query results within 200 millis in Flask <\br>
-Constraints: cluster size and count, nodes 3-5, metrics that can queried from the DB
+Spec: 
+- Query results within 200 millis in Flask
+
+Constraints: 
+- Cluster size and count
+- Nodes 3-5
+- Metrics that can queried from the DB
 
 
 
