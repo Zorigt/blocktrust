@@ -13,16 +13,16 @@ def sendCassandra(iter):
     session = cluster.connect()
     session.set_keyspace("bt2")
 
-    insert_statement = session.prepare("INSERT INTO bt2.txns (id) VALUES (?)")
+    insert_statement = session.prepare("INSERT INTO bt2.txns (id, value1) VALUES (?, ?)")
 
     count = 0
-
     # batch insert into cassandra database
     batch = BatchStatement(consistency_level=ConsistencyLevel.QUORUM)
-    
-    for record in iter:
-        batch.add(insert_statement, (record[0]))
 
+    for record in iter:
+        print("=========================="+ record[0] +"==="+ record[:12] +" = "+ record )
+
+        batch.add(insert_statement, (str(count),str(record[:12])))
 
         # split the batch, so that the batch will not exceed the size limit
         count += 1
@@ -39,9 +39,10 @@ if __name__ == "__main__":
     ssc = StreamingContext(sc, 2) # 2 second window
     broker, topic = sys.argv[1:]
     kvs = KafkaUtils.createDirectStream(ssc, [topic], {"metadata.broker.list": broker})
-
+    #kvs.pprint()
     lines = kvs.map(lambda x: x[1])
     lines.foreachRDD(lambda rdd: rdd.foreachPartition(sendCassandra))
-    lines.pprint()
+    #lines.foreachRDD(sendCassandra)
+    #lines.pprint()
     ssc.start()
     ssc.awaitTermination()
