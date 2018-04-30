@@ -26,6 +26,27 @@ Combined ~ 1 TB of data to process
 ## Data Pipeline 
 ![alt text](/data-pipeline.png)
 
+
+## What are the primary engineering challenges? -> Why would a Data Engineering Hiring Manager care about this project
+- High throughput processing from Kafka broker to Spark stream
+- High availabilit database choice and queries for demo
+- Overall completeness of the pipeline
+
+## Proposed architecture
+S3, Kafka, Spark stream, Cassandra, Flask
+
+## What are the (quantitative) specifications/constraints for this project?
+Spec: 
+- Query results within 200 millis in Flask
+
+Constraints: 
+- Cluster size and count
+- Nodes 3-5
+- Metrics that can queried from the DB
+
+
+
+
 References <br />
 (1) April 20, 2018; https://coinmarketcap.com/currencies/bitcoin/  <br />
 (2) April 20, 2018; https://blockchain.info/address/1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v
