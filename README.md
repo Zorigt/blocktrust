@@ -1,5 +1,5 @@
 # Insight Data Engineering 18B
-**Blocktrust**: In Block-Data 👁️ We Trust 
+**₿locktrust**: In ₿lock-Data 👁️ We Trust
 ## Project Description
 Bring transparency to bitcoin transactions and blockchains. Blockchains are immutable public ledger that can be audited, but hardly anyone keeps track of how money is moved  between wallets. Average daily bitcoin transaction volume is roughly **$7,449,010,000** USD as in *BILLIONS* (1). 
 ## Purpose
