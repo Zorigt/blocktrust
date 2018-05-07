@@ -48,17 +48,20 @@ def sendCassandra(iter):
         inputs = record2['inputs']
         outputs = record2['outputs']
         for input in inputs:
-	  for output in outputs:
-            #print(output['output_pubkey_base58'])
-            if (output.get('output_pubkey_base58')):
-              print(output['output_pubkey_base58'])
-              batch.add(insert_statement, (datetime.datetime.fromtimestamp(int(record2['timestamp'])/1000.), '', output['output_pubkey_base58'], int(output['output_satoshis'])))
-	
-        # split the batch, so that the batch will not exceed the size limit
-            count += 1
-        if count > 65535:
-           session.execute(batch)
-           batch = BatchStatement(consistency_level=ConsistencyLevel.QUORUM)
+            if input.get('input_pubkey_base58'):
+                print(input['input_pubkey_base58'])
+                for output in outputs:
+                    #print(output['output_pubkey_base58'])
+                    if output.get('output_pubkey_base58'):
+                        print(output['output_pubkey_base58'])
+                        batch.add(insert_statement, (datetime.datetime.fromtimestamp(int(record2['timestamp'])/1000.), input['input_pubkey_base58'], output['output_pubkey_base58'], int(output['output_satoshis'])))
+
+                        # split the batch, so that the batch will not exceed the size limit
+                        count += 1
+                        if count % 500 == 0:
+                            print(count)
+                            session.execute(batch)
+                            batch = BatchStatement(consistency_level=ConsistencyLevel.QUORUM)
 
     # send the batch that is less than 500            
     session.execute(batch)

@@ -1,0 +1,17 @@
+{% extends "mybase.html" %} <!--this means that you are extending the base template -->
+{% block main %} <!-- this is the name of the block below -->
+
+ <h1>₿locktrust: In ₿lock-Data We Trust 👁️</h1>
+ <h3>De-anonymize ₿itcoin transactions</h3>
+ <p style="font-size:16px;">
+      user ID (0~1999):<input type="text" size="5" name="a">
+      Number of Records:<input type="text" size="5" name="b">
+</p>
+ <button class="button button5" href=# id="calculate">Plot trace</button>
+
+<!-- Plotly chart will be drawn inside this DIV -->
+<div id="chart1"></div>
+
+{% endblock %}
+
+

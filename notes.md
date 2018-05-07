@@ -10,7 +10,7 @@ spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.3.0 sp
 
 https://github.com/apache/spark/blob/master/examples/src/main/python/streaming/direct_kafka_wordcount.py
 
-python -m py_compile script.py
+python -m py_compile spark-kafka.py
 
 /usr/local/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 2 --topic txns
 
@@ -87,3 +87,55 @@ from pyspark import SparkContext
 parsed = spark.read.option("multiline", "true").json("/home/ubuntu/s3files/blocks-000000000000.json")
 test = parsed.select("transactions.inputs").take(2)
 test[0].inputs[2]
+parsed.printSchema
+
+from pyspark import SparkContext
+txnsjson = spark.read.option("multiline", "true").json("/home/ubuntu/s3files/txns-000000000000.json")
+pubkey = txnsjson.select("inputs.input_pubkey_base58")
+outkey = txnsjson.select("outputs.output_pubkey_base58")
+
+
+ batch.add(insert_statement, (datetime.datetime.fromtimestamp(record2['timestamp']/1000.), input['input_pubkey_base58'], output['output_pubkey_base58'], int(output['output_satoshis'])))
+
+ 1LuckyR1fFHEsXYyx5QK4UFzv3PEAepPMK
+
+
+ cqlsh:bt2> select count(*) from txns3;
+
+ count
+--------
+ 350107
+
+(1 rows)
+
+CREATE TABLE txns4 (txn_date timestamp, from_wallet text, to_wallet text, amt bigint, PRIMARY KEY (txn_date, from_wallet, to_wallet, amt) ) WITH CLUSTERING ORDER BY (amt ASC);
+
+CREATE TABLE txns4 (txn_date timestamp, from_wallet text, to_wallet text, amt bigint, PRIMARY KEY (from_wallet, to_wallet, amt) ) WITH CLUSTERING ORDER BY (to_wallet ASC,amt ASC);
+
+sudo pip install --ignore-installed numpy
+
+select count(*), sum(amt), to_wallet from txns4 where from_wallet = '1LuckyR1fFHEsXYyx5QK4UFzv3PEAepPMK' group by to_wallet;
+
+Out[2]: 'sha1:3dd6773f4e41:3847307de2e32b74c9494b3faeea957f2632cc77'
+sha1:3dd6773f4e41:3847307de2e32b74c9494b3faeea957f2632cc77
+
+Out[2]: 'sha1:397c73c5f70f:4142ddb90f1acedb38ab57c100d580258cafc780'
+
+
+c = get_config()
+
+# Kernel config
+c.IPKernelApp.pylab = 'inline'  # if you want plotting support always in your notebook
+
+# Notebook config
+c.NotebookApp.certfile = u'/home/ubuntu/certs/mycert.pem' #location of your certificate file
+c.NotebookApp.ip = '*'
+c.NotebookApp.open_browser = False  #so that the ipython notebook does not opens up a browser by default
+c.NotebookApp.password = u'sha1:3dd6773f4e41:3847307de2e32b74c9494b3faeea957f2632cc77'  #edit this with the SHA hash that you generated after typing in Step 9
+# This is the port we opened in Step 3.
+c.NotebookApp.port = 8888
+
+
+
+
+
