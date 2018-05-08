@@ -1,3 +1,4 @@
+/*
 var socket = io('http://' + document.domain + ':' + location.port);
 
 var maxNodesToProcess = 5000;
@@ -38,3 +39,4 @@ socket.on('components', function(msg) {
 socket.on('error', function(err) {
     console.log("error returned: ", err);
 });
+*/

@@ -137,5 +137,19 @@ c.NotebookApp.port = 8888
 
 
 
+Jupyter v3
+ec2-34-211-4-230.us-west-2.compute.amazonaws.com
+Instance state
+running
+IPv4 Public IP
+34.211.4.230
+Instance type
+t2.large
+IPv6 IPs
+Out[2]: 'sha1:e152adbb1c03:c396aa1ae1bd75982e34909840482339f2d8e357'
+
+
+
+select count(*) as cnt, sum(amt) as sm, from_wallet from txns4 where to_wallet = '1LuckyR1fFHEsXYyx5QK4UFzv3PEAepPMK' group by from_wallet allow filtering;
 
 

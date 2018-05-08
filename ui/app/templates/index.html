@@ -3,14 +3,21 @@
 
  <h1>₿locktrust: In ₿lock-Data We Trust 👁️</h1>
  <h3>De-anonymize ₿itcoin transactions</h3>
+{% for id in ids %}
+        <h3>{{id}}</h3>
+        <div id="{{id}}"></div>
+    {% endfor %}
  <p style="font-size:16px;">
-      user ID (0~1999):<input type="text" size="5" name="a">
-      Number of Records:<input type="text" size="5" name="b">
+      Wallet address: <input type="text" size="80" name="wallet">
 </p>
- <button class="button button5" href=# id="calculate">Plot trace</button>
+ <button class="button button5" href=# id="calculate-incoming">Plot Incoming Bitcoins</button>
 
 <!-- Plotly chart will be drawn inside this DIV -->
 <div id="chart1"></div>
+
+<button class="button button5" href=# id="calculate-outgoing">Plot Outgoing Bitcoins</button>
+<!-- Plotly chart will be drawn inside this DIV -->
+<div id="chart2"></div>
 
 {% endblock %}
 

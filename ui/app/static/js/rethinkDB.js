@@ -1,3 +1,4 @@
+/*
 // receive the data from rethinkDB -> flask -> here
 var socket = io('http://' + document.domain + ':' + location.port);
 
@@ -32,4 +33,5 @@ function updateTable(record) {
         }
     }
 };
+*/
 

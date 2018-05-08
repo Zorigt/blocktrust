@@ -23,13 +23,33 @@
 
 $(function() {
     var submit_form = function(e) {
-        $.getJSON($SCRIPT_ROOT + '/_query');
+        $.getJSON($SCRIPT_ROOT + '/_incoming-query',
+            {
+                wallet: $('input[name="wallet"]').val()
+            },
+            function(data) {
+                makePlotly(data.result);
+            });
         return false;
     };
-    $('button#calculate').bind('click', submit_form);
+    $('button#calculate-incoming').bind('click', submit_form);
 
 });
 
+$(function() {
+    var submit_form = function(e) {
+        $.getJSON($SCRIPT_ROOT + '/_outgoing-query',
+            {
+                wallet: $('input[name="wallet"]').val()
+            },
+            function(data) {
+                makePlotly(data.result);
+            });
+        return false;
+    };
+    $('button#calculate-outgoing').bind('click', submit_form);
+
+});
 // This is the function that will continue to run at 10s interval.
 /*
 function continuousQ() {
@@ -55,51 +75,46 @@ var colors = ['6600CC',	'FFCC00', '000000', 'CC0000']
 
 // This is the function that will take the data from cassandra and update the plot.
 function makePlotly( allRows ){
-    var x = [], y = [], mean = [], std = [];
+    console.log(allRows);
+    var x = [], y = [], z = [], mean = [], std = [];
     var xBox = [], yBox = [];
     var bound = [];
 
     // use regex to extract time information
-    var time_pattern = new RegExp("[0-9]{2}:[0-9]{2}:[0-9]{2}", "m");
+    // var time_pattern = new RegExp("[0-9]{2}:[0-9]{2}:[0-9]{2}", "m");
 
     for (var i=0; i<allRows.length; i++) {
         row = allRows[i];
-        var reMatch = time_pattern.exec(row['time']);
-
-        mean.push( row['mean'] );
-        std.push( row['std'] );
-
-        x.push( reMatch[0] );
-        y.push( row['acc'] );
+        x.push( row['count'] );
+        y.push( row['sum']/100000000  );
+        z.push( row['to_wallet']);
     }
     x = x.reverse();
     y = y.reverse();
-    mean = mean.reverse();
-    std  = std.reverse();
+    z = z.reverse();
+
+    console.log(x);
+    console.log(y);
 
 
-    // find the boundary between each window
-    bound.push(0);
-    for (var i=0; i<x.length; i++) {
-        if (i+1 < x.length && mean[i+1] != mean[i]) {
-            bound.push(i);
-            bound.push(i+1);
-        }
-    }
-    bound.push(i-1);
 
     // get the DOM object for plotting
     var plotDiv = document.getElementById("chart1");
     var traces = [{
         x: x,
-        y: y
+        y: y,
+        mode: 'markers',
+        type: 'scatter',
+        name: 'Team A',
+        text: z,
+        size: 4
     }];
 
     // Draw the window box
     shapes = [];
     for (var i=0; i<bound.length/2; i++) {
         shapes.push({
-            type: 'rect',
+            type: 'scatter',
             // x-reference is assigned to the x-values
             xref: 'x',
             // y-reference is assigned to the y-values
@@ -120,12 +135,12 @@ function makePlotly( allRows ){
     var layout = {
   
         shapes,
-        title: 'User ID '+$('input[name="a"]').val()+' (refresh every 10 s)',
+        //title: 'User ID '+$('input[name="a"]').val()+' (refresh every 10 s)',
         yaxis: {
             title: 'Acceleration'
         }
 
     }
 
-    Plotly.newPlot('chart1', traces, layout);
+    Plotly.newPlot('chart1', traces);
 };
