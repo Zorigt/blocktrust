@@ -23,9 +23,10 @@
 
 $(function() {
     var submit_form = function(e) {
-        $.getJSON($SCRIPT_ROOT + '/_incoming-query',
+        $.getJSON($SCRIPT_ROOT + '/_query',
             {
-                wallet: $('input[name="wallet"]').val()
+                wallet: $('input[name="wallet"]').val(),
+                queryType: 'incoming'
             },
             function(data) {
                 makePlotly(data.result, 'incoming');
@@ -38,9 +39,10 @@ $(function() {
 
 $(function() {
     var submit_form = function(e) {
-        $.getJSON($SCRIPT_ROOT + '/_outgoing-query',
+        $.getJSON($SCRIPT_ROOT + '/_query',
             {
-                wallet: $('input[name="wallet"]').val()
+                wallet: $('input[name="wallet"]').val(),
+                queryType: 'outgoing'
             },
             function(data) {
                 makePlotly(data.result, 'outgoing');
@@ -137,7 +139,7 @@ function makePlotly( allRows, chartType ){
         shapes,
         //title: 'User ID '+$('input[name="a"]').val()+' (refresh every 10 s)',
         yaxis: {
-            title: 'Acceleration'
+            title: 'Bitcoins'
         }
 
     }
