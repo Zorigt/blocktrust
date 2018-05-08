@@ -82,12 +82,32 @@ def hello():
                            graphJSON=graphJSON)
     #return render_template("index.html")
 
-# the route to execute the query
+# the route to execute the income bitcoin query
 @app.route('/_incoming-query')
 def find_incoming():
     """get wallet address for query"""
     print(request.args)
     wallet = request.args.get('wallet')
+    #stmt = "select count(*) as cnt, sum(amt) as sm, to_wallet from txns4 where from_wallet=%s group by to_wallet;"
+    stmt = "select count(*) as cnt, sum(amt) as sm, from_wallet from txns4 where to_wallet=%s group by from_wallet allow filtering;"
+    response = session.execute(stmt, parameters=[wallet])
+    response_list = []
+    for val in response:
+        response_list.append(val)
+    jsonresponse = [{"count": x.cnt,
+                     "sum": x.sm,
+                     "from_wallet": x.from_wallet} for x in response_list]
+    print(jsonresponse)
+    return jsonify(result=jsonresponse)
+
+
+# the route to execute the outgoing bitcoin query
+@app.route('/_outgoing-query')
+def find_outgoing():
+    """get wallet address for query"""
+    print(request.args)
+    wallet = request.args.get('wallet')
+    #stmt = "select count(*) as cnt, sum(amt) as sm, from_wallet from txns4 where to_wallet=%s group by from_wallet allow filtering;"
     stmt = "select count(*) as cnt, sum(amt) as sm, to_wallet from txns4 where from_wallet=%s group by to_wallet;"
     response = session.execute(stmt, parameters=[wallet])
     response_list = []
@@ -98,8 +118,6 @@ def find_incoming():
                      "to_wallet": x.to_wallet} for x in response_list]
     print(jsonresponse)
     return jsonify(result=jsonresponse)
-
-
 
 
 

@@ -28,7 +28,7 @@ $(function() {
                 wallet: $('input[name="wallet"]').val()
             },
             function(data) {
-                makePlotly(data.result);
+                makePlotly(data.result, 'incoming');
             });
         return false;
     };
@@ -43,7 +43,7 @@ $(function() {
                 wallet: $('input[name="wallet"]').val()
             },
             function(data) {
-                makePlotly(data.result);
+                makePlotly(data.result, 'outgoing');
             });
         return false;
     };
@@ -74,7 +74,7 @@ var colors = ['6600CC',	'FFCC00', '000000', 'CC0000']
 
 
 // This is the function that will take the data from cassandra and update the plot.
-function makePlotly( allRows ){
+function makePlotly( allRows, chartType ){
     console.log(allRows);
     var x = [], y = [], z = [], mean = [], std = [];
     var xBox = [], yBox = [];
@@ -142,5 +142,11 @@ function makePlotly( allRows ){
 
     }
 
-    Plotly.newPlot('chart1', traces);
+    if (chartType == 'incoming') {
+        Plotly.newPlot('chart1', traces);
+    }
+    else if (chartType == 'outgoing') {
+        Plotly.newPlot('chart2', traces);
+    }
+
 };
