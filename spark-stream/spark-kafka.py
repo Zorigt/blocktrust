@@ -33,11 +33,11 @@ def printJson(iter):
 
 def sendCassandra(iter):
     print("send to cassandra")
-    cluster = Cluster(['35.163.17.140', '34.210.159.192','52.13.218.79','54.244.134.26'])
+    cluster = Cluster(['35.165.160.43', '54.244.77.128','34.217.63.218'])
     session = cluster.connect()
-    session.set_keyspace("bt2")
+    session.set_keyspace("blocktrust")
 
-    insert_statement = session.prepare("INSERT INTO bt2.txns2 (txn_timestamp, from_wallet, to_wallet, amt) VALUES (?, ?, ?, ?)")
+    insert_statement = session.prepare("INSERT INTO temp1 (from_wallet, to_wallet, txn_date, amt) VALUES (?, ?, ?, ?)")
 
     count = 0
     # batch insert into cassandra database
@@ -54,7 +54,7 @@ def sendCassandra(iter):
                     #print(output['output_pubkey_base58'])
                     if output.get('output_pubkey_base58'):
                         print(output['output_pubkey_base58'])
-                        batch.add(insert_statement, (datetime.datetime.fromtimestamp(int(record2['timestamp'])/1000.), input['input_pubkey_base58'], output['output_pubkey_base58'], int(output['output_satoshis'])))
+                        batch.add(insert_statement, (input['input_pubkey_base58'], output['output_pubkey_base58'],datetime.datetime.fromtimestamp(int(record2['timestamp'])/1000.), int(output['output_satoshis'])))
 
                         # split the batch, so that the batch will not exceed the size limit
                         count += 1
@@ -68,7 +68,7 @@ def sendCassandra(iter):
     session.shutdown()
 
 if __name__ == "__main__":
-    sc = SparkContext(appName="blocktrust")
+    sc = SparkContext(appName="PySparkShell")
     ssc = StreamingContext(sc, 1) # 2 second window
     broker, topic = sys.argv[1:]
     kvs = KafkaUtils.createDirectStream(ssc, [topic], {"metadata.broker.list": broker})
@@ -76,7 +76,6 @@ if __name__ == "__main__":
     # Parse the inbound message as json
     parsed = kvs.map(lambda v: json.loads(v[1]))
     #parsed.pprint()
-    print("---------------------------------------------------------\n")
     #lines = kvs.map(lambda x: x[1])
     parsed.foreachRDD(lambda rdd: rdd.foreachPartition(sendCassandra))
     #parsed.foreachRDD(lambda rdd: rdd.foreachPartition(printJson))

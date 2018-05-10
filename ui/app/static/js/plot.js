@@ -95,8 +95,8 @@ function makePlotly( allRows, chartType ){
     y = y.reverse();
     z = z.reverse();
 
-    console.log(x);
-    console.log(y);
+    //console.log(x);
+    //console.log(y);
 
 
 
