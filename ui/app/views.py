@@ -48,10 +48,12 @@ def find_incoming():
     response_list = []
     for val in response:
         response_list.append(val)
+    print(response_list)
     if queryType == 'incoming':
         jsonresponse = [{"count": x.cnt,
                          "sum": x.sm,
                          "from_wallet": x.from_wallet} for x in response_list]
+        print(jsonresponse)
     elif queryType == 'outgoing':
         jsonresponse = [{"count": x.cnt,
                          "sum": x.sm,

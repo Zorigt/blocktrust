@@ -38,18 +38,20 @@ $(function() {
 // This is the function that will take the data from cassandra and update the plot.
 function makePlotly( allRows, chartType ){
     console.log(allRows);
-    var x = [], y = [], z = [], mean = [], std = [];
-    var xBox = [], yBox = [];
-    var bound = [];
+    var x = [], y = [], z = [];
 
-    // use regex to extract time information
-    // var time_pattern = new RegExp("[0-9]{2}:[0-9]{2}:[0-9]{2}", "m");
 
+    // retrieve the x as counts, y as sum, z as wallet id
     for (var i=0; i<allRows.length; i++) {
         row = allRows[i];
         x.push( row['count'] );
         y.push( row['sum']/100000000  );
-        z.push( row['to_wallet']);
+        if (chartType == 'incoming') {
+            z.push(row['from_wallet']);
+        }
+        else if (chartType == 'outgoing') {
+            z.push(row['to_wallet']);
+        }
     }
     x = x.reverse();
     y = y.reverse();
