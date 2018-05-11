@@ -1,25 +1,7 @@
-
-// Use anonymous function to submit form to flask 
+// Use anonymous function to submit form to flask
 // for querying data from cassandra.
 // Then, receive the data from flask from cassandra
 // When the form is submitted, create a continuous query
-/*$(function() {
-    var submit_form = function(e) {
-        $.getJSON($SCRIPT_ROOT + '/_query', {
-            a: $('input[name="a"]').val(),
-            b: $('input[name="b"]').val()
-        }, function(data) {
-            makePlotly(data.result);
-        });
-        return false;
-    };
-    $('button#calculate').bind('click', submit_form);
-    $('input[type=text]').bind('keydown', function(e) {
-        if (e.keyCode == 13) {
-            submit_form(e);
-        }
-    });
-});*/
 
 $(function() {
     var submit_form = function(e) {
@@ -52,28 +34,6 @@ $(function() {
     $('button#calculate-outgoing').bind('click', submit_form);
 
 });
-// This is the function that will continue to run at 10s interval.
-/*
-function continuousQ() {
-    setInterval(call, 10000);
-};
-*/
-
-
-// This is the function that will actually do the query.
-function call() {
-    $.getJSON($SCRIPT_ROOT + '/_query', {
-        a: $('input[name="a"]').val(),
-        b: $('input[name="b"]').val()
-    }, function(data) {
-        makePlotly(data.result);
-    });
-    return false;
-};
-
-
-var colors = ['6600CC',	'FFCC00', '000000', 'CC0000']
-
 
 // This is the function that will take the data from cassandra and update the plot.
 function makePlotly( allRows, chartType ){
@@ -100,8 +60,7 @@ function makePlotly( allRows, chartType ){
 
 
 
-    // get the DOM object for plotting
-    var plotDiv = document.getElementById("chart1");
+    // get xy coords for plotting
     var traces = [{
         x: x,
         y: y,
@@ -112,43 +71,23 @@ function makePlotly( allRows, chartType ){
         size: 4
     }];
 
-    // Draw the window box
-    shapes = [];
-    for (var i=0; i<bound.length/2; i++) {
-        shapes.push({
-            type: 'scatter',
-            // x-reference is assigned to the x-values
-            xref: 'x',
-            // y-reference is assigned to the y-values
-            yref: 'y',
-            x0: x[bound[2*i]],
-            y0: mean[bound[2*i]] - 2 * std[bound[2*i]],
-            x1: x[bound[2*i+1]],
-            y1: mean[bound[2*i]] + 2 * std[bound[2*i]],
-            fillcolor: colors[i%4],
-            opacity: 0.2,
-            line: {
-                width: 0
-            }
-        });
-    }
 
-    // Compose layout
+    // Define layout
     var layout = {
-  
-        shapes,
-        //title: 'User ID '+$('input[name="a"]').val()+' (refresh every 10 s)',
-        yaxis: {
-            title: 'Bitcoins'
-        }
-
-    }
+      title: 'Transactions for '+ chartType +' bitcoins',
+      xaxis: {
+        title: 'Number of transactions'
+      },
+      yaxis: {
+        title: 'Bitcoins'
+      }
+    };
 
     if (chartType == 'incoming') {
-        Plotly.newPlot('chart1', traces);
+        Plotly.newPlot('chart1', traces, layout);
     }
     else if (chartType == 'outgoing') {
-        Plotly.newPlot('chart2', traces);
+        Plotly.newPlot('chart2', traces, layout);
     }
 
 };

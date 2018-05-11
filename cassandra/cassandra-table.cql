@@ -11,3 +11,6 @@ spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.3.0 sp
 https://github.com/apache/spark/blob/master/examples/src/main/python/streaming/direct_kafka_wordcount.py
 
 python -m py_compile script.py
+
+kafka-console-producer.sh --broker-list localhost:9092 --topic my_topic
+--new-producer < my_file.txt
