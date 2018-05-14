@@ -6,4 +6,4 @@ cluster = Cluster(config.CASSANDRA_SERVER)
 session = cluster.connect(config.CASSANDRA_NAMESPACE)
 
 session.execute('DROP TABLE IF EXISTS txns;')
-session.execute('CREATE TABLE txns (from_wallet text, to_wallet text, txn_date timestamp, amt bigint, PRIMARY KEY (from_wallet, to_wallet, txn_date) ) WITH CLUSTERING ORDER BY (to_wallet ASC,txn_date ASC);')
+session.execute('CREATE TABLE txns (from_wallet text, to_wallet text, txn_date bigint, amt bigint, PRIMARY KEY (from_wallet, to_wallet, txn_date) ) WITH CLUSTERING ORDER BY (to_wallet ASC,txn_date ASC);')

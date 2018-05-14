@@ -76,12 +76,12 @@ function makePlotly( allRows, chartType ){
 
     // Define layout
     var layout = {
-      title: 'Transactions for '+ chartType +' bitcoins',
+      title: 'Activities for '+ chartType +' bitcoins',
       xaxis: {
-        title: 'Number of transactions'
+        title: 'Aggregate transactions per wallet'
       },
       yaxis: {
-        title: 'Bitcoins'
+        title: 'Total bitcoins transferred'
       }
     };
 
