@@ -41,9 +41,9 @@ def find_incoming():
     wallet = request.args.get('wallet')
     queryType = request.args.get('queryType')
     if queryType == 'incoming':
-        stmt = "select count(*) as cnt, sum(amt) as sm, from_wallet from txns4 where to_wallet=%s group by from_wallet allow filtering;"
+        stmt = "select count(*) as cnt, sum(amt) as sm, from_wallet from txns where to_wallet=%s group by from_wallet allow filtering;"
     elif queryType == "outgoing":
-        stmt = "select count(*) as cnt, sum(amt) as sm, to_wallet from txns4 where from_wallet=%s group by to_wallet;"
+        stmt = "select count(*) as cnt, sum(amt) as sm, to_wallet from txns where from_wallet=%s group by to_wallet;"
     response = session.execute(stmt, parameters=[wallet])
     response_list = []
     for val in response:

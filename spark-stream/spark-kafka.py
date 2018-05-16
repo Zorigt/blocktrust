@@ -33,28 +33,28 @@ def printJson(iter):
 
 def sendCassandra(iter):
     print("send to cassandra")
-    cluster = Cluster(['35.165.160.43', '54.244.77.128','34.217.63.218'])
+    cluster = Cluster(['52.36.211.47', '52.38.24.8','52.34.60.38'])
     session = cluster.connect()
     session.set_keyspace("blocktrust")
 
-    insert_statement = session.prepare("INSERT INTO temp1 (from_wallet, to_wallet, txn_date, amt) VALUES (?, ?, ?, ?)")
+    insert_statement = session.prepare("INSERT INTO txns (from_wallet, to_wallet, txn_date, amt) VALUES (?, ?, ?, ?)")
 
     count = 0
     # batch insert into cassandra database
     batch = BatchStatement(consistency_level=ConsistencyLevel.QUORUM)
-    
+
     for record in iter:
         record2 = convert(record)
         inputs = record2['inputs']
         outputs = record2['outputs']
         for input in inputs:
             if input.get('input_pubkey_base58'):
-                print(input['input_pubkey_base58'])
+                #print(input['input_pubkey_base58'])
                 for output in outputs:
                     #print(output['output_pubkey_base58'])
                     if output.get('output_pubkey_base58'):
-                        print(output['output_pubkey_base58'])
-                        batch.add(insert_statement, (input['input_pubkey_base58'], output['output_pubkey_base58'],datetime.datetime.fromtimestamp(int(record2['timestamp'])/1000.), int(output['output_satoshis'])))
+                        #print(output['output_pubkey_base58'])
+                        batch.add(insert_statement, (input['input_pubkey_base58'], output['output_pubkey_base58'], int(record2['timestamp']), int(output['output_satoshis'])))
 
                         # split the batch, so that the batch will not exceed the size limit
                         count += 1
@@ -63,23 +63,23 @@ def sendCassandra(iter):
                             session.execute(batch)
                             batch = BatchStatement(consistency_level=ConsistencyLevel.QUORUM)
 
-    # send the batch that is less than 500            
+    # send the batch that is less than 500
     session.execute(batch)
     session.shutdown()
 
+def f(rdd):
+	rows = rdd.collect()
+     	for r in rows:
+        	print r
+
 if __name__ == "__main__":
     sc = SparkContext(appName="PySparkShell")
-    ssc = StreamingContext(sc, 1) # 2 second window
+    ssc = StreamingContext(sc, 2) # 2 second window
     broker, topic = sys.argv[1:]
     kvs = KafkaUtils.createDirectStream(ssc, [topic], {"metadata.broker.list": broker})
-    #kvs.pprint()
     # Parse the inbound message as json
     parsed = kvs.map(lambda v: json.loads(v[1]))
-    #parsed.pprint()
     #lines = kvs.map(lambda x: x[1])
     parsed.foreachRDD(lambda rdd: rdd.foreachPartition(sendCassandra))
-    #parsed.foreachRDD(lambda rdd: rdd.foreachPartition(printJson))
-    #lines.foreachRDD(sendCassandra)
-    #lines.pprint()
     ssc.start()
     ssc.awaitTermination()
